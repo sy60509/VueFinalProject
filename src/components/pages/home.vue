@@ -79,16 +79,16 @@
       <div class="col-md-3">
         <!-- 左側選單 (List group) -->
         <div class="list-group sticky-top">
-          <a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-gold">
-            <i class="fa fa-suitcase" aria-hidden="true"></i>全部商品 </a>
-          <a class="list-group-item list-group-item-action" data-toggle="list" href="#class-1">
-            <i class="fa fa-gift" aria-hidden="true"></i>電信</a>
-          <a class="list-group-item list-group-item-action " data-toggle="list" href="#class-2">
-            <i class="fa fa-film" aria-hidden="true"></i>食物</a>
-          <a class="list-group-item list-group-item-action " data-toggle="list" href="#class-3">
-            <i class="fa fa-paw" aria-hidden="true"></i>3C</a>
-          <a class="list-group-item list-group-item-action " data-toggle="list" href="#class-4">
-            <i class="fa fa-tree" aria-hidden="true"></i>手機</a>
+          <a class="list-group-item list-group-item-action active list-group-item-secondary" data-toggle="list" href="#list-gold" :style="{'Font-color':'white'}">
+            <i class="fa fa-suitcase" aria-hidden="true" :style="{'color':'white'}"></i>全部商品 </a>
+          <a class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="list" href="#class-1">
+            <i class="fa fa-gift" aria-hidden="true" :style="{'color':'white'}"></i>電信</a>
+          <a class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="list" href="#class-2">
+            <i class="fa fa-film" aria-hidden="true" :style="{'color':'white'}"></i>食物</a>
+          <a class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="list" href="#class-3">
+            <i class="fa fa-paw" aria-hidden="true" :style="{'color':'white'}"></i>3C</a>
+          <a class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="list" href="#class-4">
+            <i class="fa fa-tree" aria-hidden="true" :style="{'color':'white'}"></i>手機</a>
         </div>
       </div>
 
@@ -121,10 +121,11 @@
               </div>
             </div>
 
-<!-- 商品卡 -->
+    
     <loading :active.sync="isLoading"></loading>
+      <!--全部商品的商品卡-->
         <div class="row mt-4">
-          <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
+          <div class="col-md-4 mb-4" v-for="item in products" :key="item.id" >
             <div class="card border-0 shadow-sm">
               <div style="height: 150px; background-size: cover; background-position: center"
                 :style="{backgroundImage: `url(${item.imageUrl})`}">
@@ -155,48 +156,7 @@
             </div>
           </div>
         </div> 
-
-            <!-- 查看更多的modal -->
-            <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
-              aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <img :src="product.imageUrl" class="img-fluid" alt="">
-                    <blockquote class="blockquote mt-3">
-                      <p class="mb-0">{{ product.content }}</p>
-                      <footer class="blockquote-footer text-right">{{ product.description }}</footer>
-                    </blockquote>
-                    <div class="d-flex justify-content-between align-items-baseline">
-                      <div class="h4" v-if="!product.price">{{ product.origin_price }} 元</div>
-                      <del class="h6" v-if="product.price">原價 {{ product.origin_price }} 元</del>
-                      <div class="h4" v-if="product.price">現在只要 {{ product.price }} 元</div>
-                    </div>
-                    <select name="" class="form-control mt-3" v-model="product.num">
-                      <option :value="num" v-for="num in 10" :key="num">
-                        選購 {{num}} {{product.unit}}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="modal-footer">
-                    <div class="text-muted text-nowrap mr-3">
-                      小計 <strong>{{ product.num * product.price }}</strong> 元
-                    </div>
-                    <button type="button" class="btn btn-primary"
-                      @click="addtoCart(product.id, product.num)">
-                      <i class="fas fa-spinner fa-spin" v-if="product.id === status.loadingItem"></i>
-                      加到購物車
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>                   
+                 
             
             <!-- 分頁 -->
             <nav aria-label="Page navigation" class="my-5">
@@ -218,10 +178,9 @@
             </nav>
           </div>
 
-        <!--分類1-->
+        <!--分類為電信的商品卡-->
           <div class="tab-pane" id="class-1">
             <div class="row align-items-stretch">
-              <!-- 禮品 -->
               <div class="col-md-4 mb-4" v-for="item in products" :key="item.id" v-if="item.category == '電信'">
                 <div class="card border-0 box-shadow text-center h-100">
                   <div class="card border-0 shadow-sm">
@@ -256,6 +215,46 @@
               </div>
             </div>
           </div>
+           <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" >{{ product.title }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <img :src="product.imageUrl" class="img-fluid" alt="">
+                    <blockquote class="blockquote mt-3">
+                      <p class="mb-0">{{ product.content }}</p>
+                      <footer class="blockquote-footer text-right">{{ product.description }}</footer>
+                    </blockquote>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <div class="h4" v-if="!product.price">{{ product.origin_price }} 元</div>
+                      <del class="h6" v-if="product.price">原價 {{ product.origin_price }} 元</del>
+                      <div class="h4" v-if="product.price">現在只要 {{ product.price }} 元</div>
+                    </div>
+                    <select name="" class="form-control mt-3" v-model="product.num">
+                      <option :value="num" v-for="num in 10" :key="num">
+                        選購 {{num}} {{product.unit}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="text-muted text-nowrap mr-3">
+                      小計 <strong>{{ product.num * product.price }}</strong> 元
+                    </div>
+                    <button type="button" class="btn btn-primary"
+                      @click="addtoCart(product.id, product.num)">
+                      <i class="fas fa-spinner fa-spin" v-if="product.id === status.loadingItem"></i>
+                      加到購物車
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>           
         <!--分類2-->
           <div class="tab-pane" id="class-2">
             <div class="row align-items-stretch">
@@ -461,6 +460,18 @@ export default {
       });
     },
     getProduct(id){
+      const vm = this;
+      const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/product/${id}`;
+      vm.status.loadingItem = id;
+      this.$http.get(url).then((response) => {
+        $('#productModal').modal('show');
+        vm.product = response.data.product;
+        console.log(response);
+        vm.status.loadingItem = '';
+
+      });
+    },
+    getProduct2(id){
       const vm = this;
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/product/${id}`;
       vm.status.loadingItem = id;
